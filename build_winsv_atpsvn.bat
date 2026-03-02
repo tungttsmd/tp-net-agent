@@ -20,7 +20,7 @@ set "RUNTIME_DIR=%MODULE_DIR%\runtime"
 set "DIST_DIR=%MODULE_DIR%\dist"
 set "APP_NAME=winsv_atpsvn"
 set "JAR_NAME=winsv_atpsvn-1.0.0.jar"
-set "DEPLOY_DIR=%ROOT_DIR%tp-net-winsv-atpsvn"
+set "DEPLOY_DIR=%ROOT_DIR%tp-net-agent"
 set "JVM_MODULES=java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.security.jgss,java.sql,jdk.attach,jdk.jdi"
 
 echo.
@@ -141,7 +141,7 @@ if errorlevel 1 (
     echo %RED%[FAILED]%RESET% Deploy that bai!
     pause & exit /b 1
 )
-echo %GREEN%[OK]%RESET% Deployed to: tp-net-winsv-atpsvn\
+echo %GREEN%[OK]%RESET% Deployed to: tp-net-agent\
 
 rmdir /s /q "%DIST_DIR%"
 rmdir /s /q "%RUNTIME_DIR%"
@@ -160,7 +160,7 @@ echo.
 echo %CYAN%[INFO]%RESET% Output: %DEPLOY_DIR%\
 echo.
 echo %CYAN%[INFO]%RESET% Cau truc:
-echo         tp-net-winsv-atpsvn\
+echo         tp-net-agent\
 echo         ^|-- app\
 echo         ^|-- runtime\
 echo         ^|-- %APP_NAME%.exe
