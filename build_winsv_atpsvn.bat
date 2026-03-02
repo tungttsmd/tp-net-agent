@@ -20,6 +20,7 @@ set "RUNTIME_DIR=%MODULE_DIR%\runtime"
 set "DIST_DIR=%MODULE_DIR%\dist"
 set "APP_NAME=winsv_atpsvn"
 set "JAR_NAME=winsv_atpsvn-1.0.0.jar"
+set "DEPLOY_DIR=%ROOT_DIR%tp-net-winsv-atpsvn"
 set "JVM_MODULES=java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.security.jgss,java.sql,jdk.attach,jdk.jdi"
 
 echo.
@@ -38,7 +39,7 @@ call mvn clean package -pl winsv_atpsvn -am -DskipTests
 if errorlevel 1 (
     echo.
     echo %RED%[FAILED]%RESET% Maven build that bai!
-    exit /b 1
+    pause & exit /b 1
 )
 echo.
 echo %GREEN%[OK]%RESET% Maven build thanh cong ^> %JAR_NAME%
@@ -75,7 +76,7 @@ jlink ^
 if errorlevel 1 (
     echo.
     echo %RED%[FAILED]%RESET% jlink that bai! Kiem tra JAVA_HOME: %JAVA_HOME%
-    exit /b 1
+    pause & exit /b 1
 )
 echo.
 echo %GREEN%[OK]%RESET% Runtime tao thanh cong: runtime\
@@ -99,7 +100,7 @@ jpackage ^
 if errorlevel 1 (
     echo.
     echo %RED%[FAILED]%RESET% jpackage that bai!
-    exit /b 1
+    pause & exit /b 1
 )
 echo.
 echo %GREEN%[OK]%RESET% App image: dist\%APP_NAME%\
@@ -130,6 +131,25 @@ if exist "%RUN_SRC%" (
 )
 
 :: -------------------------------------------------------
+:: STEP 6: Deploy va don dep
+:: -------------------------------------------------------
+echo.
+echo %CYAN%[INFO]%RESET% [6/6] Deploy va don dep...
+if exist "%DEPLOY_DIR%" rmdir /s /q "%DEPLOY_DIR%"
+xcopy "%APP_DIR%" "%DEPLOY_DIR%\" /e /i /q
+if errorlevel 1 (
+    echo %RED%[FAILED]%RESET% Deploy that bai!
+    pause & exit /b 1
+)
+echo %GREEN%[OK]%RESET% Deployed to: tp-net-winsv-atpsvn\
+
+rmdir /s /q "%DIST_DIR%"
+rmdir /s /q "%RUNTIME_DIR%"
+rmdir /s /q "%TARGET_DIR%"
+
+echo %GREEN%[OK]%RESET% Temp files cleaned.
+
+:: -------------------------------------------------------
 :: HOAN THANH
 :: -------------------------------------------------------
 echo.
@@ -137,10 +157,10 @@ echo %GREEN%===============================================%RESET%
 echo %GREEN%  BUILD HOAN THANH!%RESET%
 echo %GREEN%===============================================%RESET%
 echo.
-echo %CYAN%[INFO]%RESET% App dir : %APP_DIR%
+echo %CYAN%[INFO]%RESET% Output: %DEPLOY_DIR%\
 echo.
 echo %CYAN%[INFO]%RESET% Cau truc:
-echo         %APP_DIR%\
+echo         tp-net-winsv-atpsvn\
 echo         ^|-- app\
 echo         ^|-- runtime\
 echo         ^|-- %APP_NAME%.exe
@@ -148,4 +168,5 @@ echo         ^|-- .env
 echo         ^`-- run.bat
 echo.
 
+pause
 endlocal
