@@ -6,7 +6,6 @@ com\tpservers\Models\SensorState$Holder.class
 com\tpservers\Services\Facade\LifecycleHookerService$Holder.class
 com\tpservers\CommandHandler\Modules\Profile\ProfileHardwareNetworkModule.class
 com\tpservers\CommandHandler\Modules\Launch\LaunchCurrentVersionModule.class
-com\tpservers\Models\HardwareProfile$Holder.class
 com\tpservers\Services\Facade\CommandService.class
 com\tpservers\Core\PoolCore.class
 com\tpservers\Repositories\MetaRespository.class
@@ -27,7 +26,6 @@ com\tpservers\CommandHandler\Modules\Profile\ProfileHardwareDeviceModule.class
 com\tpservers\Core\PoolCore$Holder.class
 com\tpservers\Services\Facade\WorkerService$Holder.class
 com\tpservers\CommandHandler\Modules\Profile\ProfileHardwareProfileModule.class
-com\tpservers\Models\HardwareProfile.class
 com\tpservers\Services\Facade\MqttService.class
 com\tpservers\CommandHandler\Modules\Launch\LaunchUpdateModule.class
 com\tpservers\CommandHandler\Modules\Power\PowerResetModule.class
@@ -44,6 +42,7 @@ com\tpservers\Services\Facade\ConsoleService$Holder.class
 com\tpservers\Services\Facade\ConfigService$Holder.class
 com\tpservers\CommandHandler\Modules\Power\PowerShutdownModue.class
 com\tpservers\CommandHandler\Modules\Profile\ProfileHardwareMotherboardModule.class
+com\tpservers\CommandHandler\Modules\Health\HealthNetworkModule.class
 com\tpservers\Services\Facade\ConsoleService.class
 com\tpservers\Services\Facade\HardwareService$Holder.class
 com\tpservers\Services\Facade\HeartbeatService.class
