@@ -16,6 +16,7 @@ set "RESET=%ESC%[0m"
 set "ROOT_DIR=%~dp0"
 set "MODULE_DIR=%ROOT_DIR%winsv_atpsvn"
 set "TARGET_DIR=%MODULE_DIR%\target"
+set "LIB_TARGET_DIR=%ROOT_DIR%\libs\tungtt-lib\target"
 set "RUNTIME_DIR=%MODULE_DIR%\runtime"
 set "DIST_DIR=%MODULE_DIR%\dist"
 set "APP_NAME=winsv_atpsvn"
@@ -148,6 +149,7 @@ echo %GREEN%[OK]%RESET% Deployed to: tp-net-agent\
 rmdir /s /q "%DIST_DIR%"
 rmdir /s /q "%RUNTIME_DIR%"
 rmdir /s /q "%TARGET_DIR%"
+rmdir /s /q "%LIB_TARGET_DIR%"
 
 echo %GREEN%[OK]%RESET% Temp files cleaned.
 
