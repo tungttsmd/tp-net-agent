@@ -1,6 +1,7 @@
 package com.tpservers.Repositories;
 
 import com.tpservers.Services.Facade.HardwareService;
+import tungtt.Security.Modules.MacHwidGenerator;
 
 public final class MetaRespository {
 
@@ -56,8 +57,7 @@ public final class MetaRespository {
      * =============================================================================
      */
     private static String hwidEncode() {
-        return SecureRespository.hwidTailCuttingEncode(HardwareService.getCpuId(), 8) + "-"
-                + SecureRespository.hwidTailCuttingEncode(HardwareService.getDiskSerial(), 8);
+        return new MacHwidGenerator(HardwareService.getHwidProfileContext()).build();
     }
 
 }

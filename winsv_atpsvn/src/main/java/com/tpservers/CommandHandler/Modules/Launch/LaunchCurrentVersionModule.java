@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import com.tpservers.Services.Facade.ConfigService;
 
 @ModuleAnnotation
-public final class LaunchUpdateModule implements CommandModule {
+public final class LaunchCurrentVersionModule implements CommandModule {
 
     @Override
     public String title() {
@@ -22,7 +22,7 @@ public final class LaunchUpdateModule implements CommandModule {
 
     @Override
     public String command() {
-        return "launch-update";
+        return "current-version";
     }
 
     @Override
@@ -40,7 +40,9 @@ public final class LaunchUpdateModule implements CommandModule {
             );
 
             JsonObject runtime = new JsonObject();
-            runtime.addProperty("status", "update received");
+            runtime.addProperty("current-version", ConfigService.HOST_VERSION());
+            runtime.addProperty("host-from-prefix", ConfigService.HOST_FROM_PREFIX());
+            runtime.addProperty("host-id", ConfigService.HOST_ID());
 
             signalPublisher.publish(
                 ConfigService.SIGNAL_TARGET_KEY(),
@@ -54,8 +56,6 @@ public final class LaunchUpdateModule implements CommandModule {
                 command(),
                 ctx,
                 runtime);
-
-            System.exit(80); // Trả cho Launch exit code 80 để Launch tự update
 
         } catch (Exception e) {
             Console.error(e.getMessage());

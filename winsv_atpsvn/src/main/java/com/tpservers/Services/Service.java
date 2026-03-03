@@ -1,6 +1,5 @@
 package com.tpservers.Services;
 
-import com.tpservers.Helpers.Tungtt;
 import com.tpservers.Repositories.MetaRespository;
 import com.tpservers.Services.Facade.ConsoleService;
 import com.tpservers.Services.Facade.HeartbeatService;
@@ -34,10 +33,8 @@ public final class Service {
 
         /* ========== TURN MQTT SERVICE ON ============ */
         try {
-            MqttService.connect();
+            MqttService.start();
             ConsoleService.info("MQTT Client ID: " + MqttService.clientId() + "\n" +
-                    "=> Subscribing topic: " + Tungtt.toJson(MqttService.subTopic()) + "\n" +
-                    "=> Publishing topic: " + Tungtt.toJson(MqttService.pubTopic()) + "\n" +
                     "[1/2] MQTT Service booted successfully");
         } catch (Exception e) {
             ConsoleService.error("[1/2] MQTT Service booted failed");
@@ -61,7 +58,6 @@ public final class Service {
         /* ========== INFOMATION ============ */
         ConsoleService.info("HOST ID: " + MetaRespository.hostId());
         ConsoleService.info("MQTT Client ID: " + MqttService.clientId());
-        ConsoleService.info("MQTT Sub Topic: " + Tungtt.toJson(MqttService.subTopic()));
         ConsoleService.info("WORKER COUNT: " + WorkerService.getWorkerCount());
 
         Holder.started = true;

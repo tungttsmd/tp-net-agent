@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.JsonObject;
 
+import com.tpservers.Repositories.MetaRespository;
 import tungtt.Handler.CommandHandler.EnvelopPublisher.HeartbeatPublisher;
 import tungtt.Handler.CommandHandler.EnvelopPublisher.SignalPublisher;
 import tungtt.Handler.CommandHandler.Dispatchers.CommandContext;
@@ -33,7 +34,7 @@ public final class HeartbeatService {
             try {
                 EnvelopeMetaContext envelopeMetacontext = new EnvelopeMetaContext(
                         hostId,
-                        ConfigService.HOST_FROM_PREFIX() + "-" + hostId + "-" + HardwareService.hwHwid(),
+                        ConfigService.HOST_FROM_PREFIX() + "-" + hostId + "-" + MetaRespository.hostHwid(),
                         ConfigService.HOST_VERSION(),
                         Console.now());
 

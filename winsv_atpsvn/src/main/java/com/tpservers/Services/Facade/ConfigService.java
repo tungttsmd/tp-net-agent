@@ -45,6 +45,12 @@ public final class ConfigService {
 
         /* ============================ ENV MQTT ============================ */
 
+        static final String MQTT_SERVER_HOST = prop("MQTT_SERVER_HOST");
+        static final int MQTT_SERVER_PORT = propIntParse("MQTT_SERVER_PORT");
+
+        static final String MQTT_OPT_USERNAME = prop("MQTT_OPT_USERNAME");
+        static final String MQTT_OPT_PASSWORD = prop("MQTT_OPT_PASSWORD");
+
         static final String CONTROL_TOPIC = propReplaceHostId("MQTT_CONTROL_TOPIC");
 
         static final String RUNTIME_TOPIC = propReplaceHostId("MQTT_RUNTIME_TOPIC");
@@ -97,6 +103,26 @@ public final class ConfigService {
     }
 
     /* ========================= ENV MQTT ========================== */
+
+    public static String MQTT_SERVER_HOST() {
+        return Holder.MQTT_SERVER_HOST;
+    }
+
+    public static int MQTT_SERVER_PORT() {
+        return Holder.MQTT_SERVER_PORT;
+    }
+
+    public static String MQTT_BROKER_URL() {
+        return "tcp://" + Holder.MQTT_SERVER_HOST + ":" + Holder.MQTT_SERVER_PORT;
+    }
+
+    public static String MQTT_OPT_USERNAME() {
+        return Holder.MQTT_OPT_USERNAME;
+    }
+
+    public static String MQTT_OPT_PASSWORD() {
+        return Holder.MQTT_OPT_PASSWORD;
+    }
 
     public static String RUNTIME_TOPIC() {
         return Holder.RUNTIME_TOPIC;

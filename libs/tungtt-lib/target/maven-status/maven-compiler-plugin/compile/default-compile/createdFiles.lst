@@ -48,6 +48,7 @@ tungtt\Broker\Mqtt\Configs\MqttInit.class
 tungtt\HardwareProfile\Modules\WindowsHardwareProfile.class
 tungtt\Pool\Hooks\JobLifecycleHooker.class
 tungtt\HardwareProfile\Contexts\HardwareSnapshot.class
+tungtt\Security\Modules\MacHwidGenerator.class
 tungtt\Pool\Hooks\WorkerHeartbeatHooker.class
 tungtt\Envelope\Contexts\HeartbeatModuleContext.class
 tungtt\Security\Contexts\HwidProfileContext.class

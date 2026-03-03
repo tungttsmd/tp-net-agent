@@ -63,7 +63,7 @@ public final class PoolCore {
         return Holder.WORKER_PREFIX_THREAD_NAME;
     }
 
-    public static String getRedisWorkerPrefix() {
+    public static String getWorkerPrefix() {
         return Holder.WORKER_PREFIX;
     }
 
