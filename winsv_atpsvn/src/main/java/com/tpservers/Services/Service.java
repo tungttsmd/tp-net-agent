@@ -23,44 +23,48 @@ public final class Service {
 
     public static void boot() {
 
-        if (Holder.started == true) {
+        if (Holder.started) {
             ConsoleService.error("Services already started");
             return;
         }
 
-        ConsoleService.info("Booting services...");
+        ConsoleService.info("════════════════════════════════════════");
+        ConsoleService.info("  tp-net-agent  |  booting...");
+        ConsoleService.info("════════════════════════════════════════");
         ConsoleService.breakLine();
 
-        /* ========== TURN MQTT SERVICE ON ============ */
+        /* ========== MQTT ============ */
+        ConsoleService.info("[1/2] Starting MQTT Service...");
         try {
             MqttService.start();
-            ConsoleService.info("MQTT Client ID: " + MqttService.clientId() + "\n" +
-                    "[1/2] MQTT Service booted successfully");
+            ConsoleService.info("[1/2] MQTT Service — OK");
         } catch (Exception e) {
-            ConsoleService.error("[1/2] MQTT Service booted failed");
+            ConsoleService.error("[1/2] MQTT Service — FAILED: " + e.getMessage());
         }
         ConsoleService.breakLine();
 
-        /* ========== TURN HEARTBEAT ============ */
-        HeartbeatService.start(12);
-
-        /* ========== TURN WORKER SERVICE ON ============ */
+        /* ========== WORKER POOL ============ */
+        ConsoleService.info("[2/2] Starting Worker Pool...");
         try {
             WorkerService.start();
-            ConsoleService.success("Worker pool count: " + WorkerService.getWorkerCount() + "\n" +
-                    "[2/2] Worker pool service booted successfully");
+            ConsoleService.info("[2/2] Worker Pool — OK  (workers: " + WorkerService.getWorkerCount() + ")");
         } catch (Exception e) {
-            ConsoleService.error("[2/2] Worker pool service booted failed");
+            ConsoleService.error("[2/2] Worker Pool — FAILED: " + e.getMessage());
         }
-
         ConsoleService.breakLine();
 
-        /* ========== INFOMATION ============ */
-        ConsoleService.info("HOST ID: " + MetaRespository.hostId());
-        ConsoleService.info("MQTT Client ID: " + MqttService.clientId());
-        ConsoleService.info("WORKER COUNT: " + WorkerService.getWorkerCount());
+        /* ========== HEARTBEAT ============ */
+        HeartbeatService.start(12);
+
+        /* ========== SUMMARY ============ */
+        ConsoleService.info("════════════════════════════════════════");
+        ConsoleService.info("  HOST FROM LOCAL IP      : " + MetaRespository.hostLocalIp());
+        ConsoleService.info("  HOST ID                 : " + MetaRespository.hostId());
+        ConsoleService.info("  HOST IDENT              : " + MqttService.clientId());
+        ConsoleService.info("  THREADS                 : " + WorkerService.getWorkerCount());
+        ConsoleService.info("════════════════════════════════════════");
+        ConsoleService.breakLine();
 
         Holder.started = true;
-        return;
     }
 }

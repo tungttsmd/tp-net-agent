@@ -12,8 +12,7 @@ public class App {
         String jarDir;
         try {
             jarDir = Paths.get(
-                App.class.getProtectionDomain().getCodeSource().getLocation().toURI()
-            ).getParent().toString();
+                    App.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent().toString();
         } catch (Exception e) {
             jarDir = ".";
         }
@@ -27,8 +26,9 @@ public class App {
     }
 
     public static void main(String[] args) {
-        
+
         Service.boot();
+
         EventHandler.boot();
 
     }

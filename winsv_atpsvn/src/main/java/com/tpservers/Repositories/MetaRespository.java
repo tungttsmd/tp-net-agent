@@ -10,15 +10,14 @@ public final class MetaRespository {
 
     private static class Holder {
 
-        private static final int    HOST_ID       = HardwareService.getRdpPort();
-        private static final String HOST_HWID     = MetaRespository.hwidEncode();
+        private static final int HOST_ID = HardwareService.getRdpPort();
+        private static final String HOST_HWID = MetaRespository.hwidEncode();
         private static final String HOST_LOCAL_IP = HardwareService.getLocalIp();
 
-        private static final String HOST_FROM =
-            Holder.HOST_LOCAL_IP + "-" +
-            System.getProperty("HOST_FROM_PREFIX") + "-" +
-            MetaRespository.hostId() + "-" +
-            MetaRespository.hostHwid();
+        private static final String HOST_FROM = Holder.HOST_LOCAL_IP + "-" +
+                System.getProperty("HOST_FROM_PREFIX") + "-" +
+                MetaRespository.hostId() + "-" +
+                MetaRespository.hostHwid();
 
         private static final String HOST_VERSION = System.getProperty("HOST_VERSION");
 
