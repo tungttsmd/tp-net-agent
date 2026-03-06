@@ -1,10 +1,13 @@
 package com.tpservers.Services;
 
-import com.tpservers.Repositories.MetaRespository;
-import com.tpservers.Services.Facade.ConsoleService;
 import com.tpservers.Services.Facade.HeartbeatService;
 import com.tpservers.Services.Facade.MqttService;
 import com.tpservers.Services.Facade.WorkerService;
+import com.tpservers.Services.Facade.SetupService;
+
+import com.tpservers.Repositories.MetaRespository;
+import com.tpservers.Services.Facade.ConfigService;
+import tungtt.Console.Console;
 
 public final class Service {
 
@@ -24,46 +27,56 @@ public final class Service {
     public static void boot() {
 
         if (Holder.started) {
-            ConsoleService.error("Services already started");
+            Console.error("Services already started");
             return;
         }
 
-        ConsoleService.info("════════════════════════════════════════");
-        ConsoleService.info("  tp-net-agent  |  booting...");
-        ConsoleService.info("════════════════════════════════════════");
-        ConsoleService.breakLine();
+        Console.info("════════════════════════════════════════");
+        Console.info("  tp-net-agent  |  booting...");
+        Console.info("════════════════════════════════════════");
+        Console.breakLine();
 
         /* ========== MQTT ============ */
-        ConsoleService.info("[1/2] Starting MQTT Service...");
+        Console.info("[1/3] Starting MQTT Service...");
         try {
             MqttService.start();
-            ConsoleService.info("[1/2] MQTT Service — OK");
+            Console.info("[1/3] MQTT Service — OK");
         } catch (Exception e) {
-            ConsoleService.error("[1/2] MQTT Service — FAILED: " + e.getMessage());
+            Console.error("[1/3] MQTT Service — FAILED: " + e.getMessage());
         }
-        ConsoleService.breakLine();
+        Console.breakLine();
 
         /* ========== WORKER POOL ============ */
-        ConsoleService.info("[2/2] Starting Worker Pool...");
+        Console.info("[2/3] Starting Worker Pool...");
         try {
             WorkerService.start();
-            ConsoleService.info("[2/2] Worker Pool — OK  (workers: " + WorkerService.getWorkerCount() + ")");
+            Console.info("[2/3] Worker Pool — OK  (workers: " + WorkerService.getWorkerCount() + ")");
         } catch (Exception e) {
-            ConsoleService.error("[2/2] Worker Pool — FAILED: " + e.getMessage());
+            Console.error("[2/3] Worker Pool — FAILED: " + e.getMessage());
         }
-        ConsoleService.breakLine();
+        Console.breakLine();
+
+        /* ========== SET UP DEVICE ============ */
+        Console.info("[3/3] Setting up device...");
+        try {
+            SetupService.boot();
+            Console.info("[3/3] Setup Service — OK");
+        } catch (Exception e) {
+            Console.error("[3/3] Setup Service — FAILED: " + e.getMessage());
+        }
+        Console.breakLine();
 
         /* ========== HEARTBEAT ============ */
         HeartbeatService.start(12);
 
         /* ========== SUMMARY ============ */
-        ConsoleService.info("════════════════════════════════════════");
-        ConsoleService.info("  HOST FROM LOCAL IP      : " + MetaRespository.hostLocalIp());
-        ConsoleService.info("  HOST ID                 : " + MetaRespository.hostId());
-        ConsoleService.info("  HOST IDENT              : " + MqttService.clientId());
-        ConsoleService.info("  THREADS                 : " + WorkerService.getWorkerCount());
-        ConsoleService.info("════════════════════════════════════════");
-        ConsoleService.breakLine();
+        Console.info("════════════════════════════════════════");
+        Console.info("  HOST FROM LOCAL IP      : " + MetaRespository.hostLocalIp());
+        Console.info("  HOST ID                 : " + MetaRespository.hostId());
+        Console.info("  HOST IDENT              : " + MqttService.clientId());
+        Console.info("  THREADS                 : " + WorkerService.getWorkerCount());
+        Console.info("════════════════════════════════════════");
+        Console.breakLine();
 
         Holder.started = true;
     }
