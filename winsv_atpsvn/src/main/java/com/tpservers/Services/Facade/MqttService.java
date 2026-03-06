@@ -60,17 +60,21 @@ public final class MqttService {
 
         Console.line();
 
-        try {
-            Holder.mqtt = MqttCore.start(config, options);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        while (true) {
+            try {
+                Holder.mqtt = MqttCore.start(config, options);
+                break;
+            } catch (Exception e) {
+                Console.error("Failed to connect MQTT, retry in 5s: " + e.getMessage());
+                try { Thread.sleep(5000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+            }
         }
 
         for (String subTopic : Holder.SUB_TOPICS) {
             try {
                 Holder.mqtt.subscribe(subTopic);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                Console.error("Failed to subscribe topic >> lost connect to MQTT broker: " + subTopic + " - " + e.getMessage());
             }
         }
 
@@ -91,34 +95,42 @@ public final class MqttService {
     public static void onMessage(MqttMessageInterface handler) {
 
         if (Holder.mqtt == null) {
-            Console.error("Mqtt client chua duoc khoi tao");
-            throw new RuntimeException("onMessage error - MqttService");
+            Console.error("Mqtt broker is not started");
+            return;
         }
 
-        Holder.mqtt.onMessage(handler);
+        try {
+            Holder.mqtt.onMessage(handler);
+        } catch (Exception e) {
+            Console.error("SUB fail: lost connect to MQTT broker: " + e.getMessage());
+        }
     }
 
     public static void publish(String topic, String payload, int qos) {
 
         if (Holder.mqtt == null) {
-            Console.error("Mqtt client chua duoc khoi tao");
-            throw new RuntimeException("publish error - MqttService");
+            Console.error("Mqtt broker is not started");
+            return;
         }
 
         try {
             Holder.mqtt.publish(topic, payload);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Console.error("PUB fail: lost connect to MQTT broker: " + e.getMessage());
         }
     }
 
     public static String clientId() {
 
         if (Holder.CLIENT_ID == null) {
-            Console.error("Mqtt client chua duoc khoi tao");
+            Console.error("Mqtt client chưa được khởi tạo");
             throw new RuntimeException("MqttService is not booted");
         }
-
-        return Holder.CLIENT_ID;
+        try {
+            return Holder.CLIENT_ID;
+        } catch (Exception e) {
+            Console.error("Get client_id fail: lost connect to MQTT broker: " + e.getMessage());
+            return null;
+        }
     }
 }

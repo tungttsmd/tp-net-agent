@@ -18,7 +18,6 @@ public final class RequestService {
     }
 
     public static String post(String url, JsonObject headers, JsonObject payload) throws Exception {
-
         return RequestCore.post(url, headers, payload);
     }
 }

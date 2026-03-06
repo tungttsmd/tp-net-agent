@@ -34,7 +34,7 @@ public final class Service {
         Console.info("════════════════════════════════════════");
         Console.info("  tp-net-agent  |  booting...");
         Console.info("════════════════════════════════════════");
-        Console.breakLine();
+        Console.line();
 
         /* ========== MQTT ============ */
         Console.info("[1/3] Starting MQTT Service...");
@@ -44,7 +44,7 @@ public final class Service {
         } catch (Exception e) {
             Console.error("[1/3] MQTT Service — FAILED: " + e.getMessage());
         }
-        Console.breakLine();
+        Console.line();
 
         /* ========== WORKER POOL ============ */
         Console.info("[2/3] Starting Worker Pool...");
@@ -54,7 +54,7 @@ public final class Service {
         } catch (Exception e) {
             Console.error("[2/3] Worker Pool — FAILED: " + e.getMessage());
         }
-        Console.breakLine();
+        Console.line();
 
         /* ========== SET UP DEVICE ============ */
         Console.info("[3/3] Setting up device...");
@@ -64,7 +64,7 @@ public final class Service {
         } catch (Exception e) {
             Console.error("[3/3] Setup Service — FAILED: " + e.getMessage());
         }
-        Console.breakLine();
+        Console.line();
 
         /* ========== HEARTBEAT ============ */
         HeartbeatService.start(12);
@@ -76,7 +76,7 @@ public final class Service {
         Console.info("  HOST IDENT              : " + MqttService.clientId());
         Console.info("  THREADS                 : " + WorkerService.getWorkerCount());
         Console.info("════════════════════════════════════════");
-        Console.breakLine();
+        Console.line();
 
         Holder.started = true;
     }

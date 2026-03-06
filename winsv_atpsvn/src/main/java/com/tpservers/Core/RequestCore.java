@@ -5,8 +5,9 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 
 import com.google.gson.JsonObject;
-import com.tpservers.Helpers.Tungtt;
-import com.tpservers.Services.Facade.ConsoleService;
+
+import tungtt.Console.Console;
+import tungtt.Console.JsonConsole;
 
 public class RequestCore {
 
@@ -32,42 +33,27 @@ public class RequestCore {
             connection = (HttpURLConnection) URI.create(url).toURL().openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
-            ConsoleService.info("Request URL: " + url);
-            ConsoleService.info("Request Method: " + connection.getRequestMethod());
-            ConsoleService.info("Request Do Output: " + connection.getDoOutput());
+            Console.info("Request URL: " + url);
+            Console.info("Request Method: " + connection.getRequestMethod());
         } catch (Exception e) {
 
-            ConsoleService.error("Request failed");
-            ConsoleService.error("Request error message: " + e.getMessage());
+            Console.error("Request lost connection");
+            Console.error("Request error message: " + e.getMessage());
             e.printStackTrace();
         }
 
         /* ========= HEADERS ======== */
-
-        if (headers != null) {
-            headers.addProperty("Content-Type", "application/json");
-            ConsoleService.info("[HEADER] COUNT: " + headers.size());
-            ConsoleService.info("[HEADER] CONTENT-TYPE: " + headers.get("Content-Type").getAsString());
-            ConsoleService.info("[HEADER] " + Tungtt.toJson(headers));
-            int i = 1;
-
-            for (String key : headers.keySet()) {
-
-                connection.setRequestProperty(key, headers.get(key).getAsString());
-                ConsoleService.info("[HEADER] " + i++ + ". " + key + ": " + headers.get(key).getAsString());
-            }
-        }
 
         /* ========= PAYLOAD ========= */
 
         try (OutputStream outStream = connection.getOutputStream()) {
 
             outStream.write(payload.toString().getBytes());
-            ConsoleService.info("[PAYLOAD] " + Tungtt.toJson(payload));
+            Console.info("  >> PAYLOAD: " + JsonConsole.toJson(payload));
         } catch (Exception e) {
 
-            ConsoleService.error("Request failed");
-            ConsoleService.error("Request error message: " + e.getMessage());
+            Console.error("Request lost connection");
+            Console.error("Request error message: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -79,8 +65,8 @@ public class RequestCore {
             return new String(connection.getInputStream().readAllBytes());
         } catch (Exception e) {
 
-            ConsoleService.error("Request failed");
-            ConsoleService.error("Request error message: " + e.getMessage());
+            Console.error("Request lost connection");
+            Console.error("Request error message: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
